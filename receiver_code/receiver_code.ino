@@ -12,7 +12,6 @@ void setup() {
   analogReadResolution(14); // change to 14-bit resolution for ADC
   analogWriteResolution(12); // change to 12-bit resolution for DAC
   Serial.begin(115200);
-  pinMode(sensorPin, INPUT);
   pinMode(DACpin, OUTPUT);
 
   // connect to Wifi
@@ -54,9 +53,8 @@ void loop() {
     client.stop();
   } else {
     Serial.println("Failed to connect to transmitter");
-  }else {
     analogWrite(DACpin, 0); // so that the reading is zero when not receiving any data
-  }
+  } 
 
   delay(1000);  // delay before fetching new data
 }
