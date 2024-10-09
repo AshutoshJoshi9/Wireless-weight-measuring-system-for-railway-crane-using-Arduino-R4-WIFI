@@ -45,8 +45,26 @@ void loop() {
         // Serial.println(sensorValue);
 
         // mappinng the sensor value to DAC value (assuming a 14-bit to 12-bit mapping)
-        int DACvalue = map(sensorValue, 0, 16383, 0, 2047);
-        analogWrite(DACpin, DACvalue);
+        // int reading = 0;
+        // for (int i=0; i < 20; i++){
+        //   int DACvalue = map(sensorValue, 0, 16383, 0, 2047);
+        //   reading = reading + DACvalue;
+        //   delay(50);
+        // }
+        // reading = round(reading / 20);
+        // analogWrite(DACpin, reading);
+        int reading = 0;
+        for (int i = 0; i < 20; i++){
+          int DACvalue = map(sensorValue, 0, 16383, 0, 2047);
+          reading = reading + DACvalue;
+          delay(50);
+        }
+        int reading1 = round(reading/20);
+        int reading2 = map(sensorValue, 0, 16383, 0, 2047);
+        // if statement for threshhold exceed checking
+        if (abs(reading1 - reading2) < 15){
+          analogWrite(DACpin, reading1);
+        }
         break;
       }
     }
